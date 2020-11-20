@@ -1,4 +1,4 @@
-NAME = Lab3
+NAME = engine
 
 ZZ = zircon
 ZZFLAGS = -cfile
@@ -15,16 +15,27 @@ REMOVE_WARN =
 HEADERS =
 LIBS =
 
-ZZINPUT = $(NAME).zc
-CCINPUT = $(NAME).spec.c
+ZZINPUT = C_$(NAME).zc
+CCINPUT = T_$(NAME).spec.c
+
+ZZDEPENDS = C_loader.zc \
+			C_aggregator.zc \
+			C_exporter.zc \
+			M_file_handler.zc \
+			M_date.zc \
+			M_time.zc
 
 all: compiler
 
 compiler:
-	./$(ZZ) $(ZZFLAGS) $(ZZINPUT)
+	cp ../src/*.zc ./
+	./$(ZZ) $(ZZFLAGS) $(ZZDEPENDS) $(ZZINPUT)
 	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARN) $(LIBS) -o $(OUTPUT) $(CCINPUT)
+	rm ./*.zc
 	@echo
 	./$(OUTPUT)
 
 clean:
-	rm -rf $(OUTPUT) $(ZZOUTPUT) Object.h
+	mv cSpec.h cSpec.hh
+	rm -rf $(OUTPUT) $(ZZOUTPUT) Object.h ./*.zc ./*.h
+	mv cSpec.hh cSpec.h
