@@ -1,7 +1,0 @@
-#import "Object"
-
-object I_engine implements Object {
-    fields {}
-
-    (void) self |> "print" |> (int): a |> printf("%d\n", a);
-}

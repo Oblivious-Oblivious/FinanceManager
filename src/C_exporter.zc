@@ -1,0 +1,17 @@
+#import "Object"
+
+object C_exporter implements Object((char*): filename, (char*): type) {
+    fields {
+        char *filename;
+        char *type;
+    }
+
+    init {
+        self->filename = filename;
+        self->type = type;
+    }
+
+    (void) self |> "export" |> printf("Exporting to `%s` with filename: `%s`\n", self->type, self->filename);
+
+    defer {}
+}

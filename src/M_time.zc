@@ -1,0 +1,9 @@
+#import "Object"
+
+object M_time implements Object {
+    fields {
+        char *hour;
+        char *minute;
+        char *second;
+    }
+}

@@ -1,0 +1,11 @@
+#import "Object"
+
+object M_file_handler implements Object((char*): filename) {
+    fields {
+        char *filename;
+    }
+
+    init {
+        self->filename = filename;
+    }
+}

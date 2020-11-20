@@ -14,7 +14,18 @@ WARNINGS =
 HEADERS =
 LIBS =
 
-INPUT = main.zc I_client.zc I_engine.zc
+INPUT = Z_main.zc \
+		\
+		C_aggregator.zc \
+		C_engine.zc \
+		C_exporter.zc \
+		C_loader.zc \
+		\
+		M_date.zc \
+		M_time.zc \
+		M_file_handler.zc \
+		\
+		V_client.zc
 
 all: default
 

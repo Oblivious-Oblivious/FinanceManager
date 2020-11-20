@@ -1,0 +1,9 @@
+#import "Object"
+
+object M_date implements Object {
+    fields {
+        char *year;
+        char *month;
+        char *day;
+    }
+}

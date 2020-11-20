@@ -1,0 +1,12 @@
+#import "Object"
+#import "C_engine"
+
+object V_client implements Object {
+    fields {}
+
+    init {}
+
+    (void) self |> "run" |> C_engine "new";
+
+    defer {}
+}

@@ -1,0 +1,23 @@
+#import "Object"
+#import "C_loader"
+#import "C_aggregator"
+#import "C_exporter"
+
+object C_engine implements Object {
+    fields {}
+
+    init {
+        self "load file" ("test.txt");
+        self "aggregate data";
+        self "export file" ("out.xml"), ("xml");
+    }
+
+    (void) self |> "load file" |> (char*): filename |> (C_loader "new" filename) "load";
+
+    (void) self |> "aggregate data" |> (C_aggregator "new") "aggregate";
+
+    (void) self |> "export file" |> (char*): filename, (char*): type |>
+        (C_exporter "new" filename, type) "export";
+
+    defer {}
+}

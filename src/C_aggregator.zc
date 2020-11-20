@@ -1,0 +1,14 @@
+#import "Object"
+
+#import "M_date"
+#import "M_time"
+
+object C_aggregator implements Object {
+    fields {}
+
+    init {}
+
+    (void) self |> "aggregate" |> printf("Aggregating data\n");
+
+    defer {}
+}
