@@ -1,0 +1,20 @@
+#import "Object"
+#import "I_engine"
+
+/* TODO -> IMPLEMENT
+#import "I_loader"
+#import "I_aggregator"
+#import "I_exporter"
+*/
+
+object I_client implements Object {
+    fields {
+        int a;
+    }
+
+    init {
+        self->a = 42;
+    }
+
+    (void) self |> "run" |> (I_engine "new") "print" self->a;
+}

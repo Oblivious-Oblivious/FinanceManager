@@ -1,0 +1,9 @@
+#import "Object"
+#import "I_client"
+
+int main(void) {
+    void *client = I_client "new";
+    client "run";
+
+    return 0;
+}
