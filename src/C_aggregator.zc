@@ -8,7 +8,8 @@ object C_aggregator implements Object {
 
     init {}
 
-    (void) self |> "aggregate" |> printf("Aggregating data\n");
+    // (void) self |> "aggregate" |> printf("Aggregating data\n");
+    (char*) self |> "aggregate" |> return "a";
 
     defer {}
 }
