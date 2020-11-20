@@ -1,6 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
-*.h linguist-language=Zircon
-*.c linguist-language=Zircon
-*.zc linguist-language=Zircon
+*.h linguist-language=C
+*.c linguist-language=C
+*.zc linguist-language=C
