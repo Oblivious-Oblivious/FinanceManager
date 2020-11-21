@@ -3,4 +3,5 @@
 
 *.h linguist-language=C
 *.c linguist-language=C
+*.zh linguist-language=C
 *.zc linguist-language=C

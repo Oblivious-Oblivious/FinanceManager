@@ -35,8 +35,11 @@ default:
 run:
 	cd src && ./$(CC) run $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARN) $(LIBS) $(INPUT)
 
-#build:
-#	cd src && ./$(CC) build $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARN) $(LIBS) $(INPUT) -o $(OUTPUT)
+build:
+	cd src && ./$(CC) build $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARN) $(LIBS) $(INPUT)
+
+d:
+	cd src && ./$(CC) -cfile $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARN) $(LIBS) $(INPUT)
 
 clean:
 	cd src && rm -rf $(OUTPUT) Object.h __zircon_main.c
