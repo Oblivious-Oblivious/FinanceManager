@@ -1,0 +1,33 @@
+#import "Object"
+
+/**
+ * TODO -> WORK WITH BIG INTEGERS
+ * TODO -> ADD A VALIDATE MESSAGE
+ **/
+
+object M_bank_account implements Object {
+    fields {
+        size_t cents;
+    }
+
+    init {}
+
+    (void) self |> "set balance" |> (size_t): cents |> self->cents = cents;
+    (size_t) self |> "view balance" |> return self->cents;
+    
+    (void) self |> "deposit" |> (size_t): cents |> self->cents += cents;
+    (size_t) self |> "withdraw" |> (size_t): cents |> {
+        if(self->cents > cents) {
+            self->cents -= cents;
+            return cents;
+        }
+        return 0;
+    }
+
+    (char*) super |> "to string" |> {
+        char *buf = (char*)malloc(sizeof(char) * 1024);
+        double value = self->cents / 100;
+        sprintf(buf, "\033[38;5;78m%.2f\033[0m|", value);
+        return buf;
+    }
+}
