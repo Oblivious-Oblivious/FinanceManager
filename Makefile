@@ -15,7 +15,9 @@ HEADERS =
 LIBS =
 
 INPUT = Z_main.zc \
+		V_client.zc \
 		\
+		C_engine.zc \
 		C_aggregator.zc \
 		C_engine.zc \
 		C_exporter.zc \
@@ -23,9 +25,7 @@ INPUT = Z_main.zc \
 		\
 		M_date.zc \
 		M_time.zc \
-		M_file_handler.zc \
-		\
-		V_client.zc
+		M_file_handler.zc
 
 all: default
 

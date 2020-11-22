@@ -13,8 +13,7 @@ object C_loader implements Object((char*): filename) {
         self->handler = M_file_handler "new" self->filename;
     }
 
-    // (void) self |> "load" |> printf("Loading file: `%s`\n", self->filename);
-    (char*) self |> "load" |> return "l";
+    (char*) self |> "load" |> return self->filename;
 
     defer {}
 }

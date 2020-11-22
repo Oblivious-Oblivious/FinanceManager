@@ -14,7 +14,7 @@ object C_engine implements Object {
     (char*) self |> "aggregate data" |>
         return (C_aggregator "new") "aggregate";
 
-    (char*) self |> "export file" |> (char*): filename, (char*): type |>
+    (void*) self |> "export file" |> (char*): filename, (char*): type |>
         return (C_exporter "new" filename, type) "export";
 
     defer {}

@@ -6,23 +6,24 @@ object V_client implements Object {
         char *input_filename;
         char *output_filename;
         char *output_type;
+        void *e;
     }
 
     init {
+        self->e = C_engine "new";
         self->input_filename = "text.txt";
         self->output_filename = "out.xml";
         self->output_type = "xml";
     }
 
-    // (void) self |> "run" |> C_engine "new";
     (void) self |> "run" |> {
-        char *l = (C_engine "new") "load file" self->input_filename;
-        char *a = (C_engine "new") "aggregate data";
-        char *e = (C_engine "new") "export file" self->output_filename, self->output_type;
+        char *lo = self->e "load file" self->input_filename;
+        char *ag = self->e "aggregate data";
+        void *ex = self->e "export file" self->output_filename, self->output_type;
 
-        printf("%s\n", l);
-        printf("%s\n", a);
-        printf("%s\n", e);
+        printf("%s\n", lo);
+        printf("%s\n", ag);
+        printf("new `%s` file -> `%s`\n", (ex "get type"), (ex "get filename"));
     }
 
     defer {}

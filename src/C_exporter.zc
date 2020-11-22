@@ -11,8 +11,10 @@ object C_exporter implements Object((char*): filename, (char*): type) {
         self->type = type;
     }
 
-    // (void) self |> "export" |> printf("Exporting to `%s` with filename: `%s`\n", self->type, self->filename);
-    (char*) self |> "export" |> return "e";
+    (char*) self |> "get filename" |> return self->filename;
+    (char*) self |> "get type" |> return self->type;
+
+    (void*) self |> "export" |> /* exec consturctor */ return self;
 
     defer {}
 }
