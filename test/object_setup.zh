@@ -1,0 +1,15 @@
+#ifndef __OBJECT_SETUP_ZH_
+#define __OBJECT_SETUP_ZH_
+
+static void setup_objects_for_tests(void) {
+    __init_C_loader();
+    __init_C_aggregator();
+    __init_C_exporter();
+    __init_C_engine();
+
+    __init_M_date();
+    __init_M_file_handler();
+    __init_M_time();
+}
+
+#endif
