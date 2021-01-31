@@ -1,9 +1,5 @@
-NAME = read_handler
-TYPE = M
-
 ZZ = zircon
 ZZFLAGS = -cfile
-ZZOUTPUT = $(NAME).h
 
 CC = clang
 OPT = -march=native -O2
@@ -16,22 +12,23 @@ REMOVE_WARN =
 HEADERS =
 LIBS =
 
-ZZINPUT = $(TYPE)_$(NAME).zc
-CCINPUT = T_$(NAME).spec.c
+CCINPUT = run_all_specs.c
 
-ZZDEPENDS = C_loader.zc \
+ZZDEPENDS = C_engine.zc \
+			C_loader.zc \
 			C_aggregator.zc \
 			C_exporter.zc \
 			M_read_handler.zc \
 			M_write_handler.zc \
 			M_date.zc \
-			M_time.zc
+			M_time.zc \
+			M_bank_account.zc
 
 all: compiler
 
 compiler:
 	cp ../src/*.zc ../src/env.zdb ./
-	./$(ZZ) $(ZZFLAGS) $(ZZDEPENDS) $(ZZINPUT)
+	./$(ZZ) $(ZZFLAGS) $(ZZDEPENDS)
 	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARN) $(LIBS) -o $(OUTPUT) $(CCINPUT)
 	rm ./*.zc
 	@echo
@@ -39,5 +36,5 @@ compiler:
 
 clean:
 	mv cSpec.h cSpec.hh
-	rm -rf $(OUTPUT) $(ZZOUTPUT) Object.h ./*.zc ./*.h ./*.zdb ./*.txt
+	rm -rf $(OUTPUT) Object.h ./*.zc ./*.h ./*.zdb ./*.txt
 	mv cSpec.hh cSpec.h
