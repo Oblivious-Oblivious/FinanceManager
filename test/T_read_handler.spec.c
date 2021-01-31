@@ -55,8 +55,6 @@ module(T_read_handler, {
 
             reader_open("test_file.txt");
             char *actual = read_line();
-            // FILE *myfd = fopen("test_file.")
-            // char *actual = zircon_read_line(myfd);
             assert_that_charptr(actual equals to "123 234 345 456 567 678 789");
         });
     });
@@ -71,8 +69,8 @@ module(T_read_handler, {
     });
 
     after({
-        // remove("new_file.txt");
-        // remove("test_file.txt");
+        remove("new_file.txt");
+        remove("test_file.txt");
     });
 });
 
