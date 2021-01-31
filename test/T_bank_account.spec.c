@@ -1,31 +1,30 @@
 #include "M_bank_account.h"
-#define view_balance() zircon_view_balance(b)
-#define set_balance(value) zircon_set_balance(b, value)
-#define deposit(value) zircon_deposit(b, value)
-#define withdraw(value) zircon_withdraw(b, value)
+#define view_balance() zircon_view_balance(T_bank_account_object)
+#define set_balance(value) zircon_set_balance(T_bank_account_object, value)
+#define deposit(value) zircon_deposit(T_bank_account_object, value)
+#define withdraw(value) zircon_withdraw(T_bank_account_object, value)
 
 #include "cSpec.h"
 
-static void setup_objects_for_tests(void) {
+static void M_bank_account_setup_objects(void) {
     __init_M_bank_account();
 }
 
-void *b;
+void *T_bank_account_object;
 void setup_bank_object(void) {
-    b = zircon_new(M_bank_account);
+    T_bank_account_object = zircon_new(M_bank_account);
 }
 
 module(T_bank_account, {
     before({
-        setup_objects_for_tests();
+        M_bank_account_setup_objects();
     });
 
     before_each(&setup_bank_object);
 
     describe("@M_bank_account", {
         it("is a valid object", {
-            bool actual = zircon_static_method_is_a(b, "M_bank_account");
-            assert_that(actual is true);
+            assert_that(false is true);
         });
     });
 
@@ -111,7 +110,7 @@ module(T_bank_account, {
             int cents = 4200;
             deposit(cents);
 
-            char *actual = zircon_to_string(b);
+            char *actual = zircon_to_string(T_bank_account_object);
             char *expected = "\033[38;5;78m42.00\033[0m|";
             assert_that_charptr(actual equals to expected);
         });
@@ -120,17 +119,9 @@ module(T_bank_account, {
             int cents = 4300;
             deposit(cents);
 
-            char *actual = zircon_to_string(b);
+            char *actual = zircon_to_string(T_bank_account_object);
             char *expected = "\033[38;5;78m43.00\033[0m|";
             assert_that_charptr(actual equals to expected);
         });
     });
-});
-
-spec_suite({
-    T_bank_account();
-});
-
-spec({
-    run_spec_suite("failing");
 });

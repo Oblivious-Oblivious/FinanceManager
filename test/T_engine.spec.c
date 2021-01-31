@@ -1,21 +1,40 @@
 #include "C_engine.h"
-#define load_file(filename) zircon_load_file(e, filename)
-#define aggregate_data() zircon_aggregate_data(e)
-#define export_file(filename, type) zircon_export_file(e, filename, type)
+#define load_file(filename) zircon_load_file(T_engine_object, filename)
+#define aggregate_data() zircon_aggregate_data(T_engine_object)
+#define export_file(filename, type) zircon_export_file(T_engine_object, filename, type)
 
 #include "cSpec.h"
-#include "object_setup.zh"
+
+static void C_engine_setup_objects(void) {
+    __init_C_engine();
+
+    __init_C_loader();
+    __init_M_read_handler();
+
+    __init_C_aggregator();
+    __init_M_date();
+    __init_M_time();
+    __init_M_bank_account();
+
+    __init_C_exporter();
+    __init_M_write_handler();
+}
+
+void *T_engine_object;
+void setup_engine_object(void) {
+    T_engine_object = zircon_new(C_engine);
+}
 
 module(T_engine, {
-    void *e;
     before({
-        setup_objects_for_tests();
-        e = zircon_new(C_engine);
+        C_engine_setup_objects();
     });
+
+    before_each(&setup_engine_object);
     
     describe("@C_engine", {
         it("is a valid object", {
-            char *actual = zircon_to_string(e);
+            char *actual = zircon_to_string(T_engine_object);
             assert_that_charptr(actual equals to "@C_engine");
         });
     });
@@ -52,12 +71,4 @@ module(T_engine, {
             assert_that_charptr(zircon_get_type(ex) equals to type);
         });
     });
-});
-
-spec_suite({
-    T_engine();
-});
-
-spec({
-    run_spec_suite("all");
 });

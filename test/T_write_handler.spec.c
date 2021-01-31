@@ -1,31 +1,31 @@
 #include "M_write_handler.h"
-#define writer_open(filepath) zircon_writer_open(f, filepath)
-#define write(str) zircon_write(f, str)
-#define write_line(line) zircon_write_line(f, line)
-#define writer_close() zircon_writer_close(f)
+#define writer_open(filepath) zircon_writer_open(T_write_handler_object, filepath)
+#define write(str) zircon_write(T_write_handler_object, str)
+#define write_line(line) zircon_write_line(T_write_handler_object, line)
+#define writer_close() zircon_writer_close(T_write_handler_object)
 
 #include "cSpec.h"
 
-static void setup_objects_for_tests(void) {
+static void M_write_handler_setup_objects(void) {
     __init_M_write_handler();
 }
 
-void *f;
-void setup_file_handler_object(void) {
-    f = zircon_new(M_write_handler);
+void *T_write_handler_object;
+void setup_write_handler_object(void) {
+    T_write_handler_object = zircon_new(M_write_handler);
 }
 
 module(T_write_handler, {
     before({
-        setup_objects_for_tests();
+        M_write_handler_setup_objects();
     });
 
-    before_each(&setup_file_handler_object);
+    before_each(&setup_write_handler_object);
 
     describe("@M_write_handler", {
         it("is a valid object", {
-            bool actual = zircon_static_method_is_a(f, "M_write_handler");
-            assert_that(true is true);
+            char *actual = zircon_to_string(T_write_handler_object);
+            assert_that_charptr(actual equals to "@M_write_handler");
         });
     });
 
@@ -82,12 +82,4 @@ module(T_write_handler, {
         remove("test_write.txt");
         remove("test_write_line.txt");
     });
-});
-
-spec_suite({
-    T_write_handler();
-});
-
-spec({
-    run_spec_suite("failing");
 });

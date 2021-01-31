@@ -1,29 +1,29 @@
 #include "M_read_handler.h"
-#define reader_open(filepath) zircon_reader_open(f, filepath)
-#define read_line() zircon_read_line(f)
-#define reader_close() zircon_reader_close(f)
+#define reader_open(filepath) zircon_reader_open(T_read_handler_object, filepath)
+#define read_line() zircon_read_line(T_read_handler_object)
+#define reader_close() zircon_reader_close(T_read_handler_object)
 
 #include "cSpec.h"
 
-static void setup_objects_for_tests(void) {
+static void M_read_handler_setup_objects(void) {
     __init_M_read_handler();
 }
 
-void *f;
-void setup_file_handler_object(void) {
-    f = zircon_new(M_read_handler);
+void *T_read_handler_object;
+void setup_read_handler_object(void) {
+    T_read_handler_object = zircon_new(M_read_handler);
 }
 
 module(T_read_handler, {
     before({
-        setup_objects_for_tests();
+        M_read_handler_setup_objects();
     });
 
-    before_each(&setup_file_handler_object);
+    before_each(&setup_read_handler_object);
 
     describe("@M_read_handler", {
         it("is a valid object", {
-            char *actual = zircon_to_string(f);
+            char *actual = zircon_to_string(T_read_handler_object);
             assert_that_charptr(actual equals to "@M_read_handler");
         });
     });
@@ -72,12 +72,4 @@ module(T_read_handler, {
         remove("new_file.txt");
         remove("test_file.txt");
     });
-});
-
-spec_suite({
-    T_read_handler();
-});
-
-spec({
-    run_spec_suite("failing");
 });
