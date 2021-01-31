@@ -24,7 +24,7 @@ module(T_bank_account, {
 
     describe("@M_bank_account", {
         it("is a valid object", {
-            bool actual = zircon_is_a(b, "M_bank_account");
+            bool actual = zircon_static_method_is_a(b, "M_bank_account");
             assert_that(actual is true);
         });
     });
