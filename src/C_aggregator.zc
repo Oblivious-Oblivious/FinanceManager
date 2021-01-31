@@ -2,6 +2,7 @@
 
 #import "M_date"
 #import "M_time"
+#import "M_bank_account"
 
 object C_aggregator implements Object {
     fields {}

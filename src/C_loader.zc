@@ -1,6 +1,6 @@
 #import "Object"
 
-#import "M_file_handler"
+#import "M_read_handler"
 
 object C_loader implements Object((char*): filename) {
     fields {
@@ -10,7 +10,7 @@ object C_loader implements Object((char*): filename) {
 
     init {
         self->filename = filename;
-        self->handler = M_file_handler "new" self->filename;
+        self->handler = M_read_handler "new";
     }
 
     (char*) self |> "load" |> return self->filename;

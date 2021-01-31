@@ -1,9 +1,10 @@
 #import "Object"
 
-/**
- * TODO -> WORK WITH BIG INTEGERS
- * TODO -> ADD A VALIDATE MESSAGE
- **/
+
+/* TODO -> WORK WITH BIG INTEGERS */
+/* TODO -> ADD A VALIDATE MESSAGE */
+
+/* TODO -> ADD BALANCE ACCOUNT FACTORY WITH DEPENDENCY INJECTION */
 
 object M_bank_account implements Object {
     fields {

@@ -16,7 +16,7 @@ object V_client implements Object {
         self->output_type = "xml";
     }
 
-    (void) self |> "run" |> {
+    (void) self |> "start" |> {
         char *lo = self->e "load file" self->input_filename;
         char *ag = self->e "aggregate data";
         void *ex = self->e "export file" self->output_filename, self->output_type;

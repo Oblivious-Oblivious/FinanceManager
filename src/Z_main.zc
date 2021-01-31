@@ -3,7 +3,7 @@
 
 int main(void) {
     void *client = V_client "new";
-    client "run";
+    client "start";
 
     return 0;
 }

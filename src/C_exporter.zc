@@ -1,14 +1,18 @@
 #import "Object"
 
+#import "M_write_handler"
+
 object C_exporter implements Object((char*): filename, (char*): type) {
     fields {
         char *filename;
         char *type;
+        void *handler;
     }
 
     init {
         self->filename = filename;
         self->type = type;
+        self->handler = M_write_handler "new";
     }
 
     (char*) self |> "get filename" |> return self->filename;
