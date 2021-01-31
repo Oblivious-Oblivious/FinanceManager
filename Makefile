@@ -19,13 +19,14 @@ INPUT = Z_main.zc \
 		\
 		C_engine.zc \
 		C_aggregator.zc \
-		C_engine.zc \
 		C_exporter.zc \
 		C_loader.zc \
 		\
 		M_date.zc \
 		M_time.zc \
-		M_file_handler.zc
+		M_bank_account.zc \
+		M_read_handler.zc \
+		M_write_handler.zc
 
 all: default
 
@@ -42,4 +43,4 @@ d:
 	cd src && ./$(CC) -cfile $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARN) $(LIBS) $(INPUT)
 
 clean:
-	cd src && rm -rf $(OUTPUT) Object.h __zircon_main.c
+	cd src && rm -rf $(OUTPUT) Object.h __zircon_main.c *.h

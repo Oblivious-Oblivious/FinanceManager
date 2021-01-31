@@ -1,0 +1,83 @@
+#import "Object"
+
+/**
+ * @class M_write_handler
+ * @brief File handler for making write operations more intuitive
+ */
+object M_write_handler implements Object {
+    /**
+     * @param fd -> The current file descriptor
+     * @param filepath -> The name of the file to write to
+     */
+    fields {
+        FILE *fd;
+        char *filepath;
+    }
+
+    /**
+     * @message: "delete previous file"
+     * @brief Delete any previous instance of the file
+     */
+    (void) self |> "delete previous file" |> {
+        remove(self->filepath);
+    }
+
+    init {}
+
+    /**
+     * @message: "writer open"
+     * @brief Open a file in write mode
+     * @param filepath -> The path to open
+     * @return a boolean signaling if the opening was successful
+     */
+    (bool) self |> "writer open" |> (char*): filepath |> {
+        self->filepath = filepath;
+        self "delete previous file";
+
+        if(!(self->fd = fopen(self->filepath, "w"))) {
+            printf("Error on openning file: `%s`\n", self->filepath);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @message: "write"
+     * @brief Write a string in the file
+     * @param str -> The string to write
+     * @return a boolean signaling if the opening was successful
+     */
+    (bool) self |> "write" |> (char*): str |> {
+        if(!(fprintf(self->fd, "%s", str))) {
+            printf("Error on writting `%s` to file: `%s`\n", str, self->filepath);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @message: "write line"
+     * @brief Writes a line in the file
+     * @param line -> The line to write
+     * @return a boolean signaling if the opening was successful
+     */
+    (bool) self |> "write line" |> (char*): line |> {
+        if(self "write" line)
+            return self "write" ("\n");
+        printf("Error on writting line `%s` on file: `%s`\n", line, self->filepath);
+        return false;
+    }
+
+    /**
+     * @message: "writer close"
+     * @brief Attempts to close the buffers to avoid memory overflows
+     * @return a boolean signaling if the opening was successful
+     */
+    (bool) self |> "writer close" |> {
+        if((fclose(self->fd))) {
+            printf("Error on closing file: `%s`\n", self->filepath);
+            return false;
+        }
+        return true;
+    }
+}

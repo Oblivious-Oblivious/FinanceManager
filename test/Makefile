@@ -1,4 +1,5 @@
-NAME = engine
+NAME = read_handler
+TYPE = M
 
 ZZ = zircon
 ZZFLAGS = -cfile
@@ -10,25 +11,26 @@ OPT = -march=native -O2
 OUTPUT = a.out
 
 #FLAGS = -Wall -Wextra -Werror -pedantic -pedantic-errors -Wpedantic
-WARNINGS = -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-format-extra-args -Wno-return-type
+WARNINGS = -Wno-incompatible-pointer-types -Wno-int-conversion -Wno-format-extra-args -Wno-return-type -Wno-void-pointer-to-int-cast -Wno-format
 REMOVE_WARN =
 HEADERS =
 LIBS =
 
-ZZINPUT = C_$(NAME).zc
+ZZINPUT = $(TYPE)_$(NAME).zc
 CCINPUT = T_$(NAME).spec.c
 
 ZZDEPENDS = C_loader.zc \
 			C_aggregator.zc \
 			C_exporter.zc \
-			M_file_handler.zc \
+			M_read_handler.zc \
+			M_write_handler.zc \
 			M_date.zc \
 			M_time.zc
 
 all: compiler
 
 compiler:
-	cp ../src/*.zc ./
+	cp ../src/*.zc ../src/env.zdb ./
 	./$(ZZ) $(ZZFLAGS) $(ZZDEPENDS) $(ZZINPUT)
 	$(CC) $(OPT) $(VERSION) $(HEADERS) $(FLAGS) $(WARNINGS) $(REMOVE_WARN) $(LIBS) -o $(OUTPUT) $(CCINPUT)
 	rm ./*.zc
@@ -37,5 +39,5 @@ compiler:
 
 clean:
 	mv cSpec.h cSpec.hh
-	rm -rf $(OUTPUT) $(ZZOUTPUT) Object.h ./*.zc ./*.h
+	rm -rf $(OUTPUT) $(ZZOUTPUT) Object.h ./*.zc ./*.h ./*.zdb ./*.txt
 	mv cSpec.hh cSpec.h
